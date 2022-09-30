@@ -9,7 +9,7 @@ public class MainCounter extends SimpleFileVisitor<Path> {
 
         String name = file.toAbsolutePath().toString();
 
-        if( name.toLowerCase().endsWith(".txt")) {
+        if( name.endsWith(".txt") /* name.toLowerCase().endsWith(".txt") */) {
             Thread contador = new Thread( new ContadorLineas(name) );
             contador.start();
         }
@@ -24,7 +24,6 @@ public class MainCounter extends SimpleFileVisitor<Path> {
     }
 
     public static void main(String[] args) throws IOException {
-        int ind = 0; //indice
         long tiempo1; //tiempo en contar las líneas de cada archivo (individual)
         long tiempo2 = 0; //tiempo en contar las líneas en todos los archivos (total)
         long linea1; //lineas para cada archivo (individual)
@@ -34,15 +33,16 @@ public class MainCounter extends SimpleFileVisitor<Path> {
             System.exit(0);
         }
 
-        do{
+
             //inicar en este directorio
-            Path startingDir = Paths.get(args[ind]);
+            Path startingDir = Paths.get(args[0]);
 
             // clase para procesar los archivos
             MainCounter contadorLineas = new MainCounter();
 
             // iniciar el recorrido de los archivos
             Files.walkFileTree(startingDir, contadorLineas);
-        } while(true);
+
+
     }
 }
